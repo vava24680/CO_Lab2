@@ -22,5 +22,3 @@ output  [32-1:0] data_o;
 reg     [32-1:0] data_o;
 //lalalalalala
 //Sign extended
-
-endmodule
