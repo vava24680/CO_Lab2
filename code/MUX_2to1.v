@@ -29,6 +29,10 @@ reg     [size-1:0] data_o;
 
 //Main function
 
+always@(*)begin
+	data_o <= select_i ? data1_i : data0_i;
+end
+
 endmodule      
           
           
