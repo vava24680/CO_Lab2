@@ -23,7 +23,7 @@ reg     [32-1:0] data_o;
 //lalalalalala
 //Sign extended
 always@(*)begin
-    data_o <= {{16{data_i[15]}},data_i};
+    data_o = {{16{data_i[15]}},data_i};
 end
 
 endmodule
