@@ -30,7 +30,31 @@ reg        [4-1:0] ALUCtrl_o;
 //Select exact operation
 always @ ( * ) begin
 	case(ALUOp_i)
-		
+		3'b000://R-type
+			begin
+				case(funct_i)
+					6'd32: ALUCtrl_o=4'b0010;
+					6'd34: ALUCtrl_o=4'b0110;
+					6'd36: ALUCtrl_o=4'b0000;
+					6'd37: ALUCtrl_o=4'b0001;
+					6'd42: ALUCtrl_o=4'b0111;
+					//6'd43: ALUCtrl_o=4'b1111; For sltu, still thinking, maybe change the 1-bit ALU turth table which is designed for slt instruction
+					/*
+					For advanced instruction
+					*/
+			end
+		3'b001://Branch
+			begin
+				ALUCtrl_o=4'b0110;
+			end
+		3'b010://Addi
+			begin
+				ALUCtrl_o=4'b0010;
+			end
+		default:
+			begin
+				ALUCtrl_o=4'bxxxx;
+			end
 	endcase
 end
 endmodule
