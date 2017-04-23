@@ -71,8 +71,9 @@ Instr_Memory IM(
 	    );
 
 MUX_2to1 #(.size(5)) Mux_Write_Reg(
-        .data0_i(),
-        .data1_i(),
+		//Done
+        .data0_i(instruction_o[20:16]),
+        .data1_i(instruction_o[15:11]),
         .select_i(RegDst_o),
         .data_o(WriteReg)
         );
