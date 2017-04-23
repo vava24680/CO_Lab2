@@ -8,6 +8,7 @@
 //----------------------------------------------
 //Description:
 //--------------------------------------------------------------------------------
+//Done
 module Simple_Single_CPU(
         clk_i,
 		rst_i
@@ -41,12 +42,16 @@ wire [32-1:0] SE_data_o;
 /*For ALU Module*/
 wire [32-1:0] ALU_src_1;
 wire [32-1:0] ALU_src_2;
-wire zero_o;
 wire [31-2:0] result_o;
+wire zero_o;
 /*For Adder2*/
 wire [32-1:0] Adder2_result;
 /*For Shift_Left_Two_32 Module*/
 wire [32-1:0] SL_32_data_o;
+
+wire Brach_signal;
+assign Brach_signal = Branch_o & zero_o;
+
 assign	ALU_src_1=RSdata_o;
 //Greate componentes
 ProgramCounter PC(
@@ -148,7 +153,7 @@ MUX_2to1 #(.size(32)) Mux_PC_Source(
 		//Done
         .data0_i(pc_number_next),
         .data1_i(Adder2_result),
-        .select_i(Branch_o && zero_o),
+        .select_i(Branch_o & zero_o),
         .data_o(pc_number_in)
         );
 

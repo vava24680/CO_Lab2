@@ -33,8 +33,8 @@ always @ ( * ) begin
 		3'b000://R-type
 			begin
 				case(funct_i)
-					6'd32: ALUCtrl_o=4'b0010;
-					6'd34: ALUCtrl_o=4'b0110;
+					6'd32: ALUCtrl_o=4'b0010;//Addition
+					6'd34: ALUCtrl_o=4'b0110;//Subtraction
 					6'd36: ALUCtrl_o=4'b0000;
 					6'd37: ALUCtrl_o=4'b0001;
 					6'd42: ALUCtrl_o=4'b0111;
@@ -42,6 +42,7 @@ always @ ( * ) begin
 					/*
 					For advanced instruction
 					*/
+				endcase
 			end
 		3'b001://Branch
 			begin

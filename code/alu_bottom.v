@@ -29,11 +29,10 @@ module alu_bottom(
                B_invert,   //1 bit B_invert (input)
                cin,        //1 bit carry in (input)
                operation,  //operation      (input)
-			   bonus_control,
+			   //bonus_control,
 			   set_out,
 			   equal_out,
                result,     //1 bit result   (output)
-			   overflow,
                cout       //1 bit carry out(output)
                );
 
@@ -45,11 +44,10 @@ input         A_invert;
 input         B_invert;
 input         cin;
 input [2-1:0] operation;
-input [3-1:0] bonus_control;
+//input [3-1:0] bonus_control;
 
 output  equal_out;
 output  result;
-output  overflow;
 output  cout;
 output  set_out;
 
@@ -57,23 +55,22 @@ reg result;
 reg cout;
 wire real_src1;     //Real operand_1
 wire real_src2;     //Real operand_2
-wire bonus_mux_out; //Result from compare_module
+//wire bonus_mux_out; //Result from compare_module
 
 assign equal_out = ~(src1^src2);//Check whether the two bit are same or not
-assign overflow = (cin^cout);   //Derive the overflow result
 assign set_out = ((~cin)&(real_src2))|((~cin)&(src1))|((src1)&(real_src2));
 
 assign real_src1 = (A_invert)?~src1:src1;
 assign real_src2 = (B_invert)?~src2:src2;
 
 /*call compare module*/
-compare COM1(
+/*compare COM1(
 	.bonus_control(bonus_control),
 	.less(less),
 	.equal(equal),
 	.bonus_mux_out(bonus_mux_out)
 	);
-
+*/
 always@( * )
 begin
 /*--Opeartion MUX below-----------------------------------*/
