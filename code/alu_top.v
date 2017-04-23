@@ -89,7 +89,7 @@ begin
 			end
 		2'b11://For SLT and bonus instruction
 			begin
-				result = 1'b0;
+				result = less;
 				cout = (real_src1&real_src2)|(real_src1&cin)|(real_src2&cin);
 			end
 		default:

@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 
 module ALU(
-	rst,
+	//rst,
     src1_i,
 	src2_i,
 	ctrl_i,
@@ -19,7 +19,7 @@ module ALU(
 	);
 
 //I/O ports
-input rst;
+//input rst;
 input  [32-1:0]  src1_i;
 input  [32-1:0]	 src2_i;
 input  [4-1:0]   ctrl_i;
@@ -248,24 +248,26 @@ alu_bottom alu32(
 
 //Main function
 always @ ( * ) begin
-	if(rst==1'b1)
+	if(ctrl_i[1:0]==2'b10)
 		begin
-			if(ctrl_i[1:0]==2'b10)
-				begin
-					zero_o = ~(|temp_result[32-1:0]);
-					result_o = temp_result[31:0];
-				end
-			else
-				begin
-					zero_o = ~(|temp_result[32-1:0]);
-					result_o = temp_result[31:0];
-				end
+			zero_o = ~(|temp_result[32-1:0]);
+			result_o = temp_result[31:0];
+		end
+	else
+		begin
+			zero_o = ~(|temp_result[32-1:0]);
+			result_o = temp_result[31:0];
+		end
+	/*if(rst==1'b1)
+		begin
+
 		end
 	else
 		begin
 			zero_o=1'b0;
 			result_o=32'b0;
 		end
+	*/
 end
 endmodule
 

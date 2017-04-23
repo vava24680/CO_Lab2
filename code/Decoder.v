@@ -46,7 +46,7 @@ always @ ( * ) begin
 			end
 		6'b000100://Branch
 			begin
-				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0011001;
+				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0010001;
 			end
 		6'b001000://Addi
 			begin
