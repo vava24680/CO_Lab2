@@ -2,11 +2,11 @@
 //--------------------------------------------------------------------------------
 //Version:     1
 //--------------------------------------------------------------------------------
-//Writer:      
+//Writer:
 //----------------------------------------------
-//Date:        
+//Date:
 //----------------------------------------------
-//Description: 
+//Description:
 //--------------------------------------------------------------------------------
 
 module ALU(
@@ -16,7 +16,7 @@ module ALU(
 	result_o,
 	zero_o
 	);
-     
+
 //I/O ports
 input  [32-1:0]  src1_i;
 input  [32-1:0]	 src2_i;
@@ -30,14 +30,19 @@ reg    [32-1:0]  result_o;
 wire             zero_o;
 
 //Parameter
-
+wire equal_in;
+wire [32-1:0] temp_equal_out; //For the output port of 1-bit ALU
+wire [32-1:0] temp_cout;      //For the output port of 1-bit ALU
+wire [32-1:0] temp_result;    //For the output port of 1-bit ALU
+wire set_out;                 //For the set output port of 1-bit ALU
 //Main function
-
+always @ ( * ) begin
+	
+end
 endmodule
 
 
 
 
 
-                    
-                    
+

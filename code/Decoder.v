@@ -48,7 +48,7 @@ always @ ( * ) begin
 			begin
 				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0010001;
 			end
-		6'b001000:
+		6'b001000://Addi
 			begin
 				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0101110;
 			end

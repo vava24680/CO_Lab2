@@ -38,7 +38,7 @@ always @ ( * ) begin
 					6'd36: ALUCtrl_o=4'b0000;
 					6'd37: ALUCtrl_o=4'b0001;
 					6'd42: ALUCtrl_o=4'b0111;
-					//6'd43: ALUCtrl_o=4'b1111; For sltu, still thinking, maybe change the 1-bit ALU turth table which is designed for slt instruction
+					6'd43: ALUCtrl_o=4'b1111; //For sltu still thinking, maybe change the 1-bit ALU turth table which is designed for slt instruction
 					/*
 					For advanced instruction
 					*/
