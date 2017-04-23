@@ -238,6 +238,7 @@ alu_top  alu31(
 	.result(temp_result[31]),
 	.cout(temp_cout[31])
 	);
+	//turn 32-bit ALU to 33-bit ALU for unsigned operation
 alu_bottom alu32(
 	.src1(src1_extraMSB),.src2(src2_extraMSB),.less(1'b0),/*.equal(),*/.A_invert(ctrl_i[3]),.B_invert(ctrl_i[2]),.cin(temp_cout[31]),.operation(ctrl_i[1:0]),
 	.set_out(set_out),
