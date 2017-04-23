@@ -205,12 +205,6 @@ alu_top  alu27(
 	.result(),
 	.cout()
 	);
-alu_top  alu27(
-	.src1(),.src2(),.less(),.equal(),.A_invert(),.B_invert(),.cin(),.operation(),
-	.equal_out(),
-	.result(),
-	.cout()
-	);
 alu_top  alu28(
 	.src1(),.src2(),.less(),.equal(),.A_invert(),.B_invert(),.cin(),.operation(),
 	.equal_out(),
