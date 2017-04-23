@@ -89,7 +89,7 @@ begin
 			end
 		2'b11://For SLT and bonus instruction
 			begin
-				result = bonus_mux_out;
+				result = 1'b0;
 				cout = (real_src1&real_src2)|(real_src1&cin)|(real_src2&cin);
 			end
 		default:

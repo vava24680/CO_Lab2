@@ -24,7 +24,7 @@ module alu_bottom(
                src1,       //1 bit source 1 (input)
                src2,       //1 bit source 2 (input)
                less,       //1 bit less     (input)
-			   equal,
+			   //equal,
                A_invert,   //1 bit A_invert (input)
                B_invert,   //1 bit B_invert (input)
                cin,        //1 bit carry in (input)
@@ -39,7 +39,7 @@ module alu_bottom(
 input         src1;
 input         src2;
 input         less;
-input 		  equal;
+//input 		  equal;
 input         A_invert;
 input         B_invert;
 input         cin;
@@ -92,7 +92,7 @@ begin
 			end
 		2'b11://For SLT and bonus instruction
 			begin
-				result = bonus_mux_out;
+				result = ((~cin)&(real_src2))|((~cin)&(src1))|((src1)&(real_src2));
 				cout = (real_src1&real_src2)|(real_src1&cin)|(real_src2&cin);
 			end
 		default:

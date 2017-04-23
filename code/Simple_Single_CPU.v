@@ -42,7 +42,7 @@ wire [32-1:0] SE_data_o;
 /*For ALU Module*/
 wire [32-1:0] ALU_src_1;
 wire [32-1:0] ALU_src_2;
-wire [31-2:0] result_o;
+wire [32-1:0] result_o;
 wire zero_o;
 /*For Adder2*/
 wire [32-1:0] Adder2_result;
@@ -129,6 +129,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc(
 
 ALU ALU(
 		//Done
+		.rst(rst_i),
         .src1_i(ALU_src_1),
 	    .src2_i(ALU_src_2),
 	    .ctrl_i(ALUCtrl_o),
@@ -145,7 +146,7 @@ Adder Adder2(
 
 Shift_Left_Two_32 Shifter(
 		//Done
-        .data_i(instruction_o[16-1:0]),
+        .data_i(SE_data_o),
         .data_o(SL_32_data_o)
         );
 
