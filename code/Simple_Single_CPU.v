@@ -19,6 +19,8 @@ input         clk_i;
 input         rst_i;
 
 //Internal Signles
+/*For SLL instruction*/
+wire [32-1:0] shamt;
 /*For PC Module*/
 wire [32-1:0] pc_number;
 wire [32-1:0] pc_number_next;
@@ -50,9 +52,9 @@ wire [32-1:0] Adder2_result;
 wire [32-1:0] SL_32_data_o;
 
 wire Brach_signal;
+assign shamt = {16'b0,instruction_o[16-1:0]};
 assign Brach_signal = Branch_o & zero_o;
-
-assign	ALU_src_1=RSdata_o;
+assign ALU_src_1=RSdata_o;
 //Greate componentes
 ProgramCounter PC(
 		//Done
@@ -118,6 +120,16 @@ Sign_Extend SE(
         .data_i(instruction_o[16-1:0]),
         .data_o(SE_data_o)
         );
+
+/*
+MUX_2to1 #(.size(32)) Mux_ALUSrc(
+		//Done
+        .data0_i(RTdata_o),
+        .data1_i(SE_data_o),
+        .select_i(ALUSrc_o),
+        .data_o(ALU_src_2)
+        );
+*/
 
 MUX_2to1 #(.size(32)) Mux_ALUSrc(
 		//Done
