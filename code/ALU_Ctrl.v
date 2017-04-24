@@ -12,7 +12,8 @@
 module ALU_Ctrl(
           funct_i,
           ALUOp_i,
-          ALUCtrl_o
+          ALUCtrl_o,
+		  shift_select_o
           );
 
 //I/O ports
@@ -20,10 +21,10 @@ input      [6-1:0] funct_i;
 input      [3-1:0] ALUOp_i;
 
 output     [4-1:0] ALUCtrl_o;
-
+output shift_select_o;
 //Internal Signals
 reg        [4-1:0] ALUCtrl_o;
-
+reg shift_select_o;
 //Parameter
 
 
@@ -40,7 +41,7 @@ always @ ( * ) begin
 					6'd42: ALUCtrl_o=4'b0111;
 					6'd43: ALUCtrl_o=4'b1111; //For sltu still thinking, maybe change the 1-bit ALU turth table which is designed for slt instruction
 					/*
-					For advanced instruction
+					
 					*/
 				endcase
 			end

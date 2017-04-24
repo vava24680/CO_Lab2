@@ -42,25 +42,55 @@ always @ ( * ) begin
 	case (instr_op_i)
 		6'b000000://R-type
 			begin
-				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0000110;
+				/*{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0000110;*/
+				ALU_op_o = 3'b000;
+				ALUSrc_o = 1'b0;
+				RegWrite_o = 1'b1;
+				RegDst_o = 1'b1;
+				Branch_o = 1'b1;
 			end
-		6'b000100://Branch
+		6'b000100://Branch Equal
 			begin
-				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0010001;
+				//{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0010001;
+				ALU_op_o = 3'b001;
+				ALUSrc_o = 1'b0;
+				RegWrite_o = 1'b0;
+				RegDst_o = 1'b0;
+				Branch_o = 1'b1;
+			end
+		6'b000101://Brach not Equal
+			begin
+				ALU_op_o = 3'b001;
+				ALUSrc_o = 1'b0;
+				RegWrite_o = 1'b0;
+				RegDst_o = 1'b0;
+				Branch_o = 1'b1;
 			end
 		6'b001000://Addi
 			begin
-				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0101100;
+				//{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'b0101100;
+				ALU_op_o = 3'b010;
+				ALUSrc_o = 1'b1;
+				RegWrite_o = 1'b1;
+				RegDst_o = 1'b0;
+				Branch_o = 1'b0;
 			end
-		/*6'b001111:
+		6'b001111://For LUI
 			begin
-
+				ALU_op_o = 3'b011;
+				ALUSrc_o = 1'b1;
+				RegWrite_o = 1'b1;
+				RegDst_o = 1'b0;
+				Branch_o = 1'b0;
 			end
-		6'b001101:
+		6'b001101://For ORI
 			begin
-
+				ALU_op_o = 3'b100;
+				ALUSrc_o = 1'b1;
+				RegWrite_o = 1'b1;
+				RegDst_o = 1'b1;
+				Branch_o = 1'b0;
 			end
-		*/
 		default:
 			begin
 				{ALU_op_o,ALUSrc_o,RegWrite_o,RegDst_o,Branch_o}=7'bxxxxxxx;

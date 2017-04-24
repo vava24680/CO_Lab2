@@ -38,6 +38,7 @@ wire ALUSrc_o;
 wire RegDst_o;
 wire Branch_o;
 /*For ALU_Ctrl Module*/
+wire shift_select;
 wire [4-1:0] ALUCtrl_o;
 /*For Sign_Extend Module*/
 wire [32-1:0] SE_data_o;
@@ -112,7 +113,8 @@ ALU_Ctrl AC(
 		//Done
         .funct_i(instruction_o[5:0]),
         .ALUOp_i(ALU_op_o),
-        .ALUCtrl_o(ALUCtrl_o)
+        .ALUCtrl_o(ALUCtrl_o),
+		.shift_select_o(shift_select)
         );
 
 Sign_Extend SE(
@@ -121,17 +123,17 @@ Sign_Extend SE(
         .data_o(SE_data_o)
         );
 
+
 /*
-MUX_2to1 #(.size(32)) Mux_ALUSrc(
+MUX_2to1 #(.size(32)) Mux_ALUSrc_1(
 		//Done
-        .data0_i(RTdata_o),
-        .data1_i(SE_data_o),
-        .select_i(ALUSrc_o),
-        .data_o(ALU_src_2)
+        .data0_i(RSdata_o),
+        .data1_i(shamt),
+        .select_i(shift_select),
+        .data_o(ALU_src_1)
         );
 */
-
-MUX_2to1 #(.size(32)) Mux_ALUSrc(
+MUX_2to1 #(.size(32)) Mux_ALUSrc_2(
 		//Done
         .data0_i(RTdata_o),
         .data1_i(SE_data_o),
