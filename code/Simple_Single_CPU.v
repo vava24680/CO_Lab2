@@ -53,9 +53,9 @@ wire [32-1:0] Adder2_result;
 wire [32-1:0] SL_32_data_o;
 
 wire Brach_signal;
-assign shamt = {16'b0,instruction_o[16-1:0]};
+assign shamt = {27'b0,instruction_o[10:6]};
 assign Brach_signal = Branch_o & zero_o;
-assign ALU_src_1=RSdata_o;
+//assign ALU_src_1=RSdata_o;
 //Greate componentes
 ProgramCounter PC(
 		//Done
@@ -124,7 +124,7 @@ Sign_Extend SE(
         );
 
 
-/*
+
 MUX_2to1 #(.size(32)) Mux_ALUSrc_1(
 		//Done
         .data0_i(RSdata_o),
@@ -132,7 +132,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc_1(
         .select_i(shift_select),
         .data_o(ALU_src_1)
         );
-*/
+
 MUX_2to1 #(.size(32)) Mux_ALUSrc_2(
 		//Done
         .data0_i(RTdata_o),

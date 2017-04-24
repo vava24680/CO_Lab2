@@ -42,10 +42,16 @@ wire [33-1:0] temp_result;    //For the output port of 1-bit ALU
 wire set_out;                 //For the set output port of 1-bit ALUq
 wire src1_extraMSB;
 wire src2_extraMSB;
+wire [32-1:0] SLL_result;
+wire [32-1:0] LUI_result;
 
 assign src1_extraMSB = (ctrl_i==4'b1111) ? 1'b0 : src1_i[31];
 assign src2_extraMSB = (ctrl_i==4'b1111) ? 1'b0 : src2_i[31];
+
 assign equal_in = (&temp_equal_out);
+assign SLL_result = src2_i << src1_i[4:0];
+assign LUI_result = src2_i << 5'd16;
+
 alu_top  alu00(
 	.src1(src1_i[0]),.src2(src2_i[0]),.less(set_out),/*.equal(),*/.A_invert(ctrl_i[3]),.B_invert(ctrl_i[2]),.cin(ctrl_i[2]&ctrl_i[1]),.operation(ctrl_i[1:0]),
 	.equal_out(temp_equal_out[0]),
@@ -234,7 +240,7 @@ alu_top  alu30(
 	);
 alu_top  alu31(
 	.src1(src1_i[31]),.src2(src2_i[31]),.less(1'b0),/*.equal(),*/.A_invert(ctrl_i[3]),.B_invert(ctrl_i[2]),.cin(temp_cout[30]),.operation(ctrl_i[1:0]),
-	.equal_out(temp_equal_out[13]),
+	.equal_out(temp_equal_out[31]),
 	.result(temp_result[31]),
 	.cout(temp_cout[31])
 	);
@@ -246,18 +252,58 @@ alu_bottom alu32(
 	.result(temp_result[32]),
 	.cout(temp_cout[32])
 	);
-
+/*ALUCtrl_o signal corresponding to What kind of operation
+------------------------
+ALUCtrl_o,operation    -
+   0000  ,   AND       -
+   0001  ,   OR        -
+   0010  ,   ADD       -
+   0011  ,   Shift_Left-*
+   0100  ,   LUI       -*
+   0101  ,   N/A       -
+   0110  ,   SUB       -
+   0111  ,   SLT       -
+   1000  ,   N/A       -
+   1001  ,   N/A       -
+   1010  ,   N/A       -
+   1011  ,   N/A       -
+   1100  ,   N/A       -
+   1101  ,   N/A       -
+   1110  ,   N/A       -
+   1111  ,   SLTU      -
+------------------------
+*/
 //Main function
 always @ ( * ) begin
-	if(ctrl_i[1:0]==2'b10)
+	if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//ADD and SUB
 		begin
-			zero_o = ~(|temp_result[32-1:0]);
+			zero_o = (~(|temp_result[31:0])) ? 1'b1 : 1'b0;
 			result_o = temp_result[31:0];
 		end
 	else
 		begin
-			zero_o = ~(|temp_result[32-1:0]);
-			result_o = temp_result[31:0];
+			case(ctrl_i)
+				4'b0011://For Shift Left operation
+					begin
+						zero_o = ~(|SLL_result);
+						result_o = SLL_result;
+					end
+				4'b0100://For LUI opeartion
+					begin
+						zero_o = ~(|LUI_result);
+						result_o = LUI_result;
+					end
+				4'b1110://For Branch not Equal
+					begin
+						zero_o = (~(|temp_result[31:0])) ? 1'b0 : 1'b1;
+						result_o = temp_result[31:0];
+					end
+				default:
+					begin
+						zero_o = ~(|temp_result[32-1:0]);
+						result_o = temp_result[31:0];
+					end
+			endcase
 		end
 	/*if(rst==1'b1)
 		begin
