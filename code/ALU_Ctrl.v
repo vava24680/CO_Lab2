@@ -28,25 +28,25 @@ reg ALUSrc_1_o;
 //Parameter
 
 /*ALUCtrl_o signal corresponding to What kind of operation
-------------------------
-ALUCtrl_o,operation    -
-   0000  ,   AND       -
-   0001  ,   OR        -
-   0010  ,   ADD       -
-   0011  ,   Shift_Left-
-   0100  ,   LUI       -
-   0101  ,   N/A       -
-   0110  ,   SUB,BEQ   -
-   0111  ,   SLT       -
-   1000  ,   N/A       -
-   1001  ,   N/A       -
-   1010  ,   N/A       -
-   1011  ,   N/A       -
-   1100  ,   N/A       -
-   1101  ,   N/A       -
-   1110  ,   BNE       -
-   1111  ,   SLTU      -
-------------------------
+---------------------------------
+ALUCtrl_o,operation             -
+   0000  ,   AND                -
+   0001  ,   OR                 -
+   0010  ,   ADD                -
+   0011  ,   Shift_Left         -
+   0100  ,   LUI                -
+   0101  ,   N/A                -
+   0110  ,   SUB,BEQ,BNE        -
+   0111  ,   SLT                -
+   1000  ,   N/A                -
+   1001  ,   N/A                -
+   1010  ,   N/A                -
+   1011  ,   N/A                -
+   1100  ,   N/A                -
+   1101  ,   N/A                -
+   1110  ,   N/A                -
+   1111  ,   SLTU               -
+---------------------------------
 */
 //Select exact operations
 always @ ( * ) begin
@@ -70,7 +70,7 @@ always @ ( * ) begin
 			end
 		3'b010://Branch not Equal
 			begin
-				{ALUSrc_1_o,ALUCtrl_o} = 5'b00110;
+				{ALUSrc_1_o,ALUCtrl_o} = 5'b01110;
 			end
 		3'b011://Addi
 			begin

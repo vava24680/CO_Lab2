@@ -50,7 +50,7 @@ wire [32-1:0] LUI_result;
 
 assign src1_extraMSB = (ctrl_i==4'b1111) ? 1'b0 : src1_i[31];
 assign src2_extraMSB = (ctrl_i==4'b1111) ? 1'b0 : src2_i[31];
-assign A_invert = (ctrl_i==4'b1111) ? 1'b0 : ctrl_i[3];
+assign A_invert = (ctrl_i==4'b1111 || ctrl_i==4'b1110) ? 1'b0 : ctrl_i[3];
 
 assign equal_in = (&temp_equal_out);
 assign SLL_result = src2_i << src1_i[4:0];
@@ -272,7 +272,7 @@ ALUCtrl_o,operation             -
    1011  ,   N/A                -
    1100  ,   N/A                -
    1101  ,   N/A                -
-   1110  ,   N/A                -
+   1110  ,   BNE                -
    1111  ,   SLTU               -
 ---------------------------------
 */
@@ -280,16 +280,8 @@ ALUCtrl_o,operation             -
 always @ ( * ) begin
 	if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//For ADD,SUB,BEQ,SLT
 		begin
-			if(BEQ_BNE)
-				begin
-					zero_o = (|temp_result[31:0]);
-					result_o = temp_result[31:0];
-				end
-			else
-				begin
-					zero_o = ~(temp_result[31:0]);
-					result_o = temp_result[31:0];
-				end
+			zero_o = ~(|temp_result[31:0]);
+			result_o = temp_result[31:0];
 		end
 	else
 		begin
@@ -303,6 +295,11 @@ always @ ( * ) begin
 					begin
 						zero_o = ~(|LUI_result);
 						result_o = LUI_result;
+					end
+				4'b1110:
+					begin
+						zero_o = (|temp_result[31:0]);
+						result_o = temp_result[31:0];
 					end
 				default://For AND,OR
 					begin
