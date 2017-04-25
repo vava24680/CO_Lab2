@@ -34,11 +34,12 @@ wire [32-1:0] RTdata_o;
 /*For Decoder Module*/
 wire RegWrite_o;
 wire [3-1:0] ALU_op_o;
-wire ALUSrc_o;
+wire ALUSrc_2_o;
 wire RegDst_o;
 wire Branch_o;
+wire BEQ_BNE;
 /*For ALU_Ctrl Module*/
-wire shift_select;
+wire ALUSrc_1_o;
 wire [4-1:0] ALUCtrl_o;
 /*For Sign_Extend Module*/
 wire [32-1:0] SE_data_o;
@@ -55,7 +56,7 @@ wire [32-1:0] SL_32_data_o;
 wire Brach_signal;
 assign shamt = {27'b0,instruction_o[10:6]};
 assign Brach_signal = Branch_o & zero_o;
-//assign ALU_src_1=RSdata_o;
+
 //Greate componentes
 ProgramCounter PC(
 		//Done
@@ -104,9 +105,10 @@ Decoder Decoder(
         .instr_op_i(instruction_o[31:26]),
 	    .RegWrite_o(RegWrite_o),
 	    .ALU_op_o(ALU_op_o),
-	    .ALUSrc_o(ALUSrc_o),
+	    .ALUSrc_o(ALUSrc_2_o),
 	    .RegDst_o(RegDst_o),
-		.Branch_o(Branch_o)
+		.Branch_o(Branch_o),
+		.BEQ_BNE(BEQ_BNE)
 	    );
 
 ALU_Ctrl AC(
@@ -114,7 +116,7 @@ ALU_Ctrl AC(
         .funct_i(instruction_o[5:0]),
         .ALUOp_i(ALU_op_o),
         .ALUCtrl_o(ALUCtrl_o),
-		.shift_select_o(shift_select)
+		.ALUSrc_1_o(ALUSrc_1_o)
         );
 
 Sign_Extend SE(
@@ -129,7 +131,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc_1(
 		//Done
         .data0_i(RSdata_o),
         .data1_i(shamt),
-        .select_i(shift_select),
+        .select_i(ALUSrc_1_o),
         .data_o(ALU_src_1)
         );
 
@@ -137,7 +139,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc_2(
 		//Done
         .data0_i(RTdata_o),
         .data1_i(SE_data_o),
-        .select_i(ALUSrc_o),
+        .select_i(ALUSrc_2_o),
         .data_o(ALU_src_2)
         );
 
@@ -147,6 +149,7 @@ ALU ALU(
         .src1_i(ALU_src_1),
 	    .src2_i(ALU_src_2),
 	    .ctrl_i(ALUCtrl_o),
+		.BEQ_BNE(BEQ_BNE),
 	    .result_o(result_o),
 		.zero_o(zero_o)
 	    );
