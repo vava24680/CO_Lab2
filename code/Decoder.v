@@ -15,8 +15,7 @@ module Decoder(
 	ALU_op_o,
 	ALUSrc_o,
 	RegDst_o,
-	Branch_o,
-	BEQ_BNE
+	Branch_o
 	);
 
 //I/O ports
@@ -27,14 +26,12 @@ output [3-1:0] ALU_op_o;
 output         ALUSrc_o;
 output         RegDst_o;
 output         Branch_o;
-output BEQ_BNE;
 //Internal Signals
 reg    [3-1:0] ALU_op_o;
 reg            ALUSrc_o;
 reg            RegWrite_o;
 reg            RegDst_o;
 reg            Branch_o;
-reg BEQ_BNE;
 //Parameter
 
 
@@ -48,7 +45,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b1;
 				RegDst_o = 1'b1;
 				Branch_o = 1'b0;
-				BEQ_BNE = 1'b0;
 			end
 		6'd4://Branch Equal
 			begin
@@ -57,7 +53,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b0;
 				RegDst_o = 1'b0;
 				Branch_o = 1'b1;
-				BEQ_BNE = 1'b0;
 			end
 		6'd5://Brach not Equal
 			begin
@@ -66,7 +61,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b0;
 				RegDst_o = 1'b0;
 				Branch_o = 1'b1;
-				BEQ_BNE = 1'b1;
 			end
 		6'd8://Addi
 			begin
@@ -75,7 +69,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b1;
 				RegDst_o = 1'b0;
 				Branch_o = 1'b0;
-				BEQ_BNE = 1'b0;
 			end
 		6'd15://For LUI
 			begin
@@ -84,7 +77,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b1;
 				RegDst_o = 1'b0;
 				Branch_o = 1'b0;
-				BEQ_BNE = 1'b0;
 			end
 		6'd13://For ORI
 			begin
@@ -93,7 +85,6 @@ always @ ( * ) begin
 				RegWrite_o = 1'b1;
 				RegDst_o = 1'b0;
 				Branch_o = 1'b0;
-				BEQ_BNE = 1'b0;
 			end
 		default:
 			begin

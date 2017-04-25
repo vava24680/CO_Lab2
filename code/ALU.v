@@ -14,7 +14,6 @@ module ALU(
     src1_i,
 	src2_i,
 	ctrl_i,
-	BEQ_BNE,
 	result_o,
 	zero_o
 	);
@@ -24,7 +23,6 @@ module ALU(
 input  [32-1:0]  src1_i;
 input  [32-1:0]	 src2_i;
 input  [4-1:0]   ctrl_i;
-input BEQ_BNE;
 
 output [32-1:0]	 result_o;
 output           zero_o;

@@ -37,7 +37,6 @@ wire [3-1:0] ALU_op_o;
 wire ALUSrc_2_o;
 wire RegDst_o;
 wire Branch_o;
-wire BEQ_BNE;
 /*For ALU_Ctrl Module*/
 wire ALUSrc_1_o;
 wire [4-1:0] ALUCtrl_o;
@@ -107,8 +106,7 @@ Decoder Decoder(
 	    .ALU_op_o(ALU_op_o),
 	    .ALUSrc_o(ALUSrc_2_o),
 	    .RegDst_o(RegDst_o),
-		.Branch_o(Branch_o),
-		.BEQ_BNE(BEQ_BNE)
+		.Branch_o(Branch_o)
 	    );
 
 ALU_Ctrl AC(
@@ -149,7 +147,6 @@ ALU ALU(
         .src1_i(ALU_src_1),
 	    .src2_i(ALU_src_2),
 	    .ctrl_i(ALUCtrl_o),
-		.BEQ_BNE(BEQ_BNE),
 	    .result_o(result_o),
 		.zero_o(zero_o)
 	    );
