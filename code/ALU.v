@@ -280,18 +280,8 @@ always @ ( * ) begin
 		begin
 			if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//For ADD,SUB,BEQ,SLT
 				begin
-					if(ctrl_i==4'b0010)
-						begin
-							result_o = src1_i+src2_i;
-							zero_o = ~(|(src1_i+src2_i));
-						end
-					else
-						begin
-							result_o = src1_i-src2_i;
-							zero_o = ~(|(src1_i+src2_i));
-						end
-					/*zero_o = ~(|temp_result[31:0]);
-					result_o = temp_result[31:0];*/
+					zero_o = ~(|temp_result[31:0]);
+					result_o = temp_result[31:0];
 				end
 			else
 				begin
