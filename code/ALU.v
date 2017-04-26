@@ -262,7 +262,7 @@ ALUCtrl_o,operation             -
    0011  ,   Shift_Left         -
    0100  ,   LUI                -
    0101  ,   N/A                -
-   0110  ,   SUB,BEQ,BNE        -
+   0110  ,   SUB,BEQ            -
    0111  ,   SLT                -
    1000  ,   N/A                -
    1001  ,   N/A                -
