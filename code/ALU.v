@@ -278,36 +278,28 @@ ALUCtrl_o,operation             -
 always @ ( * ) begin
 	if(rst==1'b1)
 		begin
-			if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//For ADD,SUB,BEQ,SLT
-				begin
-					zero_o = ~(|temp_result[31:0]);
-					result_o = temp_result[31:0];
-				end
-			else
-				begin
-					case(ctrl_i)
-						4'b0011://For Shift Left operation
-							begin
-								zero_o = ~(|SLL_result);
-								result_o = SLL_result;
-							end
-						4'b0100://For LUI opeartion
-							begin
-								zero_o = ~(|LUI_result);
-								result_o = LUI_result;
-							end
-						4'b1110:
-							begin
-								zero_o = (|temp_result[31:0]);
-								result_o = temp_result[31:0];
-							end
-						default://For AND,OR
-							begin
-								zero_o = ~(|temp_result[32-1:0]);
-								result_o = temp_result[31:0];
-							end
-					endcase
-				end
+			case(ctrl_i)
+				4'b0011://For Shift Left operation
+					begin
+						zero_o = ~(|SLL_result);
+						result_o = SLL_result;
+					end
+				4'b0100://For LUI opeartion
+					begin
+						zero_o = ~(|LUI_result);
+						result_o = LUI_result;
+					end
+				4'b1110://For BNE
+					begin
+						zero_o = (|temp_result[31:0]);
+						result_o = temp_result[31:0];
+					end
+				default://For AND,OR,SLTU
+					begin
+						zero_o = ~(|temp_result[32-1:0]);
+						result_o = temp_result[31:0];
+					end
+			endcase
 		end
 	else
 		begin
