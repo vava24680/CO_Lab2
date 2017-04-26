@@ -10,7 +10,7 @@
 //--------------------------------------------------------------------------------
 
 module ALU(
-	//rst,
+	rst,
     src1_i,
 	src2_i,
 	ctrl_i,
@@ -19,7 +19,7 @@ module ALU(
 	);
 
 //I/O ports
-//input rst;
+input rst;
 input  [32-1:0]  src1_i;
 input  [32-1:0]	 src2_i;
 input  [4-1:0]   ctrl_i;
@@ -276,46 +276,54 @@ ALUCtrl_o,operation             -
 */
 //Main function
 always @ ( * ) begin
-	if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//For ADD,SUB,BEQ,SLT
+	if(rst==1'b1)
 		begin
-			zero_o = ~(|temp_result[31:0]);
-			result_o = temp_result[31:0];
-		end
-	else
-		begin
-			case(ctrl_i)
-				4'b0011://For Shift Left operation
-					begin
-						zero_o = ~(|SLL_result);
-						result_o = SLL_result;
-					end
-				4'b0100://For LUI opeartion
-					begin
-						zero_o = ~(|LUI_result);
-						result_o = LUI_result;
-					end
-				4'b1110:
-					begin
-						zero_o = (|temp_result[31:0]);
-						result_o = temp_result[31:0];
-					end
-				default://For AND,OR
-					begin
-						zero_o = ~(|temp_result[32-1:0]);
-						result_o = temp_result[31:0];
-					end
-			endcase
-		end
-	/*if(rst==1'b1)
-		begin
-
+			if(ctrl_i==4'b0010 || ctrl_i==4'b0110)//For ADD,SUB,BEQ,SLT
+				begin
+					if(ctrl_i==4'b0010)
+						begin
+							result_o = src1_i+src2_i;
+							zero_o = ~(|(src1_i+src2_i));
+						end
+					else
+						begin
+							result_o = src1_i-src2_i;
+							zero_o = ~(|(src1_i+src2_i));
+						end
+					/*zero_o = ~(|temp_result[31:0]);
+					result_o = temp_result[31:0];*/
+				end
+			else
+				begin
+					case(ctrl_i)
+						4'b0011://For Shift Left operation
+							begin
+								zero_o = ~(|SLL_result);
+								result_o = SLL_result;
+							end
+						4'b0100://For LUI opeartion
+							begin
+								zero_o = ~(|LUI_result);
+								result_o = LUI_result;
+							end
+						4'b1110:
+							begin
+								zero_o = (|temp_result[31:0]);
+								result_o = temp_result[31:0];
+							end
+						default://For AND,OR
+							begin
+								zero_o = ~(|temp_result[32-1:0]);
+								result_o = temp_result[31:0];
+							end
+					endcase
+				end
 		end
 	else
 		begin
 			zero_o=1'b0;
 			result_o=32'b0;
 		end
-	*/
 end
 endmodule
 

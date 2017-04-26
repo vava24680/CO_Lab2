@@ -143,7 +143,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc_2(
 
 ALU ALU(
 		//Done
-		//.rst(rst_i),
+		.rst(rst_i),
         .src1_i(ALU_src_1),
 	    .src2_i(ALU_src_2),
 	    .ctrl_i(ALUCtrl_o),
